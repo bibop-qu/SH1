@@ -1,40 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_base.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/03 11:35:00 by basle-qu          #+#    #+#             */
-/*   Updated: 2015/04/22 15:13:22 by basle-qu         ###   ########.fr       */
+/*   Created: 2015/02/18 20:28:33 by basle-qu          #+#    #+#             */
+/*   Updated: 2015/04/22 15:06:17 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int			ft_putnbr(int n)
+char	*ft_base(char *set, unsigned long int val)
 {
-	int			ret;
-	long int	nb;
+	char				*base;
+	unsigned long int	quotient;
+	long int			size;
+	int					len;
 
-	ret = 0;
-	nb = n;
-	if (nb < 0)
+	size = 0;
+	quotient = val;
+	len = ft_strlen(set);
+	while (quotient != 0 && ++size > -1)
+		quotient /= len;
+	base = (char*)malloc(sizeof(char) * size + 1);
+	if (val == 0)
 	{
-		ft_putchar('-');
-		nb = -nb;
-		ret++;
+		base = "0";
+		return (base);
 	}
-	if (nb >= 0 && nb <= 9)
+	base[size] = '\0';
+	while (val != 0)
 	{
-		ft_putchar(nb + '0');
-		ret++;
+		size--;
+		base[size] = set[val % len];
+		val /= len;
 	}
-	if (nb > 9)
-	{
-		ret += ft_putnbr(nb / 10);
-		ft_putchar(nb % 10 + '0');
-		ret++;
-	}
-	return (ret);
+	return (base);
 }

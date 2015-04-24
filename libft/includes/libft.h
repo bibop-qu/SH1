@@ -17,6 +17,8 @@
 # include <stdlib.h>
 # include <string.h>
 
+#include "libftprintf.h"
+
 void	*ft_memset(void *d, int nb, size_t len);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
@@ -68,6 +70,14 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char const *s, int fd);
 void	ft_putendl_fd(char const *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
-void	ft_putnbr(int n);
+int		ft_putnbr(int n);
+int		ft_putaddr(void *ptr);
+char	*ft_base(char *set, unsigned long int val);
+
+int		ft_printf(char *str, ...);
+int		ft_putstring(char *str);
+int		ft_putlnbr(long int n);
+void	ft_putunbr(unsigned int n);
+int		ft_putulnbr(unsigned long int n);
 
 #endif

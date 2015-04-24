@@ -6,35 +6,19 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 11:35:00 by basle-qu          #+#    #+#             */
-/*   Updated: 2015/04/22 15:13:22 by basle-qu         ###   ########.fr       */
+/*   Updated: 2015/02/03 22:38:10 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int			ft_putnbr(int n)
+void		ft_putunbr(unsigned int n)
 {
-	int			ret;
-	long int	nb;
-
-	ret = 0;
-	nb = n;
-	if (nb < 0)
+	if (n <= 9)
+		ft_putchar(n + '0');
+	if (n > 9)
 	{
-		ft_putchar('-');
-		nb = -nb;
-		ret++;
+		ft_putnbr(n / 10);
+		ft_putchar(n % 10 + '0');
 	}
-	if (nb >= 0 && nb <= 9)
-	{
-		ft_putchar(nb + '0');
-		ret++;
-	}
-	if (nb > 9)
-	{
-		ret += ft_putnbr(nb / 10);
-		ft_putchar(nb % 10 + '0');
-		ret++;
-	}
-	return (ret);
 }

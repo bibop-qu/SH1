@@ -7,8 +7,6 @@ int		main(void)
 	char	*cmd;
 
 	get_next_line(0, &cmd);
-	ft_putstr("$> ");
-	ft_putstr(cmd);
-	ft_putchar('\n');
+	ft_printf("$> %s\n", cmd);
 	return (0);
 }

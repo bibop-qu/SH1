@@ -1,40 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_putaddr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/03 11:35:00 by basle-qu          #+#    #+#             */
-/*   Updated: 2015/04/22 15:13:22 by basle-qu         ###   ########.fr       */
+/*   Created: 2015/03/31 15:40:58 by basle-qu          #+#    #+#             */
+/*   Updated: 2015/04/22 15:06:59 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int			ft_putnbr(int n)
+int		ft_putaddr(void *ptr)
 {
-	int			ret;
-	long int	nb;
+	int						ret;
+	unsigned long long int	addr;
 
-	ret = 0;
-	nb = n;
-	if (nb < 0)
+	if (ptr == NULL)
 	{
-		ft_putchar('-');
-		nb = -nb;
-		ret++;
+		ret = ft_putstring("0x0");
+		return (ret);
 	}
-	if (nb >= 0 && nb <= 9)
-	{
-		ft_putchar(nb + '0');
-		ret++;
-	}
-	if (nb > 9)
-	{
-		ret += ft_putnbr(nb / 10);
-		ft_putchar(nb % 10 + '0');
-		ret++;
-	}
+	addr = (unsigned long long int)ptr;
+	write(1, "0x", 2);
+	ret = ft_putstring(ft_base("0123456789abcdef", addr)) + 2;
 	return (ret);
 }
