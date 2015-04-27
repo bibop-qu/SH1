@@ -6,7 +6,7 @@
 #    By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/06 15:15:27 by basle-qu          #+#    #+#              #
-#    Updated: 2015/01/02 18:54:12 by basle-qu         ###   ########.fr        #
+#    Updated: 2015/04/27 12:42:26 by basle-qu         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -21,7 +21,7 @@ ft_strnequ.c ft_strnew.c ft_strnstr.c ft_strrchr.c ft_strstr.c ft_strsub.c \
 ft_strtrim.c ft_tolower.c ft_toupper.c ft_strlcat.c ft_strsplit.c \
 ft_base.c ft_putaddr.c \
 GNL/get_next_line.c \
-PRINTF/flags.c PRINTF/ft_putstring.c PRINTF/modifier2.c PRINTF/modifier.c \
+#PRINTF/flags.c PRINTF/ft_putstring.c PRINTF/modifier2.c PRINTF/modifier.c \
 PRINTF/option2.c PRINTF/ft_printf.c PRINTF/option.c PRINTF/special.c \
 PRINTF/ft_putlnbr.c PRINTF/ft_putunbr.c
 
@@ -36,7 +36,7 @@ ft_strnequ.o ft_strnew.o ft_strnstr.o ft_strrchr.o ft_strstr.o ft_strsub.o \
 ft_strtrim.o ft_tolower.o ft_toupper.o ft_strlcat.o ft_strsplit.o \
 ft_base.o ft_putaddr.o \
 get_next_line.o \
-flags.o ft_putstring.o modifier2.o modifier.o option2.o ft_printf.o option.o \
+#flags.o ft_putstring.o modifier2.o modifier.o option2.o ft_printf.o option.o \
 special.o ft_putlnbr.o ft_putunbr.o
 
 NAME = libft.a

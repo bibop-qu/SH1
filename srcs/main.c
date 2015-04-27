@@ -6,7 +6,9 @@ int		main(void)
 {
 	char	*cmd;
 
+	ft_putstr("$> ");
 	get_next_line(0, &cmd);
-	ft_printf("$> %s\n", cmd);
+	ft_putstr(cmd);
+	ft_putchar('\n');
 	return (0);
 }
