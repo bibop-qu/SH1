@@ -19,6 +19,7 @@ $(NAME):
 test: fclean
 	@gcc -I includes -c $(CFLAG) -g $(SRCS)
 	@gcc -I includes -L libft/ -lft $(OBJS) -o $(NAME)
+	@echo "\033[1;36m########## MINISHELL OK ##########\033[00m"
 	@make clean
 
 clean:
