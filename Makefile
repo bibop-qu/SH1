@@ -1,6 +1,6 @@
 
-SRCS =	srcs/main.c
-OBJS =	main.o
+SRCS =	srcs/main.c srcs/env.c srcs/tools_env.c srcs/tools.c
+OBJS =	main.o env.o tools_env.o tools.o
 NAME = ft_minishell1 
 CFLAG = -Wall -Wextra -Werror
 
@@ -27,5 +27,8 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
+
+cleanall: fclean
+	@make -C libft/ fclean
 
 re: fclean $(NAME)

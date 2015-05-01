@@ -11,23 +11,31 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <signal.h>
 #include "get_next_line.h"
+#include "env.h"
 
-int		main(void)
+int		main(int ac, char **av, char **env)
 {
-	char	*cmd;
+	char	**e;
+	char	*line;
+	char	**cmd;
 
-	cmd = NULL;
+	line = NULL;
+	if (ac == 1 && av)
+		e = init_env(env);
 	while (42)
 	{
 		ft_putstr("$> ");
-		get_next_line(0, &cmd);
-		if (!ft_strcmp(cmd, "exit"))
+		get_next_line(0, &line);
+		cmd = ft_strsplit(line, ' ');
+		if (!ft_strcmp(cmd[0], "exit"))
 			exit(0);
-		else
-			ft_putstr(cmd);
-		ft_putchar('\n');
+		else if(!ft_strcmp(cmd[0], "env"))
+			ft_aff_env(e);
+		else if(!ft_strcmp(cmd[0], "setenv"))
+			e = ft_setenv(e, cmd);
+		else if(!ft_strcmp(cmd[0], "unsetenv"))
+			e = ft_unsetenv(e, cmd);
 	}
 	return (0);
 }
