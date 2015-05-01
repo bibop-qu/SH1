@@ -1,15 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools_env.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/05/01 15:27:10 by basle-qu          #+#    #+#             */
+/*   Updated: 2015/05/01 16:09:39 by basle-qu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
 #include "tools.h"
 
-char	**replace(char **e, char *name)
+char	**var_replace(char **e, char *name, char *rep)
 {
 	int		i;
 	int		size;
-	char	**cpy;
 
-	size = size_tab(e);
-
+	i = 0;
+	size = tab_size(e);
+	while (i < size)
+	{
+		if (!ft_strcmp(name, e[i]))
+			e[i] = ft_strdup(rep);
+		i++;
+	}
+	return (e);
 }
 
 int		find_tab(char *str, char **tab)

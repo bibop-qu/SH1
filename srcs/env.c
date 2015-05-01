@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/05/01 15:41:46 by basle-qu          #+#    #+#             */
+/*   Updated: 2015/05/01 16:10:13 by basle-qu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
 #include "tools.h"
@@ -37,16 +48,18 @@ char	**ft_setenv(char **e, char **cmd)
 	arg = tab_size(cmd);
 	if (arg > 3)
 		write(2, "Wrong number of arguments !!\n", 29);
-	else if (tab_cmp(cmd[1], recup_name(e)))
-		ft_putendl("already exist ...");
 	else
 	{
 		tmp = ft_strjoin(cmd[1], "=");
 		while (e[i])
 			i++;
-		if (arg == 3)
+		if (arg == 3 && find_tab(cmd[1], recup_name(e)))
+			e = var_replace(e, cmd[1], ft_strjoin(tmp, cmd[2]));
+		else if (arg == 3 && find_tab(cmd[1], recup_name(e)))
+			e = var_replace(e, cmd[1], tmp);
+		else if (arg == 3 && !find_tab(cmd[1], recup_name(e)))
 			e = ft_realloc(e, ft_strjoin(tmp, cmd[2]));
-		else if (arg == 2)
+		else if (arg == 2&& !find_tab(cmd[1], recup_name(e)))
 			e = ft_realloc(e, tmp);
 	}
 	return (e);
