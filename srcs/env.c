@@ -28,40 +28,51 @@ char	**ft_unsetenv(char **e, char **cmd)
 	int		i;
 	char	**var;
 
-	i = 0;
+	i = 1;
 	var = recup_name(e);
-	while (var[i] && cmd)
+	if (equal_in_tab(cmd))
+ 		write(2, "Syntaxe error !!\n", 14);
+	else
 	{
-		ft_putendl(var[i]);
-		i++;
+		while (var[i] && cmd)
+		{
+			ft_putendl(var[i]);
+			i++;
+		}
 	}
+	free_tab(var);
 	return (e);
 }
 
 char	**ft_setenv(char **e, char **cmd)
 {
-	int		i;
 	int		arg;
 	char	*tmp;
+	char	*tmp2;
+	char	**name;
 
-	i = 0;
 	arg = tab_size(cmd);
+	name = recup_name(e);
 	if (arg > 3)
 		write(2, "Wrong number of arguments !!\n", 29);
+	else if (equal_in_tab(cmd))
+ 		write(2, "Syntaxe error !!\n", 14);
 	else
 	{
 		tmp = ft_strjoin(cmd[1], "=");
-		while (e[i])
-			i++;
-		if (arg == 3 && find_tab(cmd[1], recup_name(e)))
-			e = var_replace(e, cmd[1], ft_strjoin(tmp, cmd[2]));
-		else if (arg == 3 && find_tab(cmd[1], recup_name(e)))
-			e = var_replace(e, cmd[1], tmp);
-		else if (arg == 3 && !find_tab(cmd[1], recup_name(e)))
-			e = ft_realloc(e, ft_strjoin(tmp, cmd[2]));
-		else if (arg == 2&& !find_tab(cmd[1], recup_name(e)))
+		tmp2 = ft_strjoin(tmp, cmd[2]);
+		if (arg == 3 && find_tab(cmd[1], name))
+			e = var_replace(e, cmd[1], tmp2);
+		else if (arg == 2 && find_tab(cmd[1], name))
+			e =  var_replace(e, cmd[1], tmp);
+		else if (arg == 3 && !find_tab(cmd[1], name))
+			e = ft_realloc(e, tmp2);
+		else if (arg == 2 && !find_tab(cmd[1], name))
 			e = ft_realloc(e, tmp);
+		free(tmp);
+		free(tmp2);
 	}
+	free_tab(name);
 	return (e);
 }
 

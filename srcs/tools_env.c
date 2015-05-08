@@ -13,17 +13,32 @@
 #include "libft.h"
 #include "tools.h"
 
+int		equal_in_tab(char **tab)
+{
+	int		i;
+
+	i = 0;
+	while (tab[i])
+	{
+		if (ft_strchr(tab[i], '='))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 char	**var_replace(char **e, char *name, char *rep)
 {
 	int		i;
-	int		size;
 
 	i = 0;
-	size = tab_size(e);
-	while (i < size)
+	while (e[i])
 	{
-		if (!ft_strcmp(name, e[i]))
+		if (!ft_strncmp(name, e[i], ft_strlen(name)))
+		{
+			free(e[i]);
 			e[i] = ft_strdup(rep);
+		}
 		i++;
 	}
 	return (e);
@@ -59,6 +74,7 @@ char	**recup_name(char **e)
 	{
 		tmp = ft_strsplit(e[i], '=');
 		name[i] = ft_strdup(tmp[0]);
+		free_tab(tmp);
 		i++;
 	}
 	name[i] = NULL;
@@ -88,5 +104,6 @@ char	**ft_realloc(char **map, char *line)
 		result[i] = ft_strdup(line);
 		result[i + 1] = NULL;
 	}
+	free_tab(map);
 	return (result);
 }

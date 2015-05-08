@@ -4,5 +4,6 @@
 
 int		tab_cmp(char *str, char **tab);
 int		tab_size(char **tab);
+void	free_tab(char **tab);
 
 #endif

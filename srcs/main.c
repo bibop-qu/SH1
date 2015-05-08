@@ -13,6 +13,7 @@
 #include "libft.h"
 #include "get_next_line.h"
 #include "env.h"
+#include "tools.h"
 
 int		main(int ac, char **av, char **env)
 {
@@ -36,6 +37,8 @@ int		main(int ac, char **av, char **env)
 			e = ft_setenv(e, cmd);
 		else if(!ft_strcmp(cmd[0], "unsetenv"))
 			e = ft_unsetenv(e, cmd);
+		free(line);
+		free_tab(cmd);
 	}
 	return (0);
 }
