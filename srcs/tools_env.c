@@ -27,6 +27,31 @@ int		equal_in_tab(char **tab)
 	return (0);
 }
 
+char	**var_del(char **e, char *name)
+{
+	int		i;
+	int		j;
+	int		size;
+	char	**cpy;
+
+	i = 0;
+	j = 0;
+	size = tab_size(e);
+	cpy = (char**)malloc(sizeof(char*) * (size + 1));
+	while (e[i])
+	{
+		if (ft_strncmp(e[i], name, ft_strlen(name)))
+		{
+			cpy[j] = ft_strdup(e[i]);
+			j++;
+		}
+		i++;
+	}
+	cpy[j] = NULL;
+	free_tab(e);
+	return (cpy);
+}
+
 char	**var_replace(char **e, char *name, char *rep)
 {
 	int		i;

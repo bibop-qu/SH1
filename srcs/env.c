@@ -30,13 +30,16 @@ char	**ft_unsetenv(char **e, char **cmd)
 
 	i = 1;
 	var = recup_name(e);
-	if (equal_in_tab(cmd))
- 		write(2, "Syntaxe error !!\n", 14);
+	if (!cmd[1])
+		write(2, "Wrong number of arguments !!\n", 29);
+	else if (equal_in_tab(cmd))
+ 		write(2, "Syntaxe error !!\n", 17);
 	else
 	{
-		while (var[i] && cmd)
+		while (cmd[i])
 		{
-			ft_putendl(var[i]);
+			if (find_tab(cmd[i], var))
+				e = var_del(e, cmd[i]);
 			i++;
 		}
 	}
@@ -53,14 +56,17 @@ char	**ft_setenv(char **e, char **cmd)
 
 	arg = tab_size(cmd);
 	name = recup_name(e);
-	if (arg > 3)
+	if (arg > 3 || !cmd[1])
 		write(2, "Wrong number of arguments !!\n", 29);
 	else if (equal_in_tab(cmd))
- 		write(2, "Syntaxe error !!\n", 14);
+ 		write(2, "Syntaxe error !!\n", 17);
 	else
 	{
 		tmp = ft_strjoin(cmd[1], "=");
-		tmp2 = ft_strjoin(tmp, cmd[2]);
+		if (cmd[2])
+			tmp2 = ft_strjoin(tmp, cmd[2]);
+		else
+			tmp2 = NULL;
 		if (arg == 3 && find_tab(cmd[1], name))
 			e = var_replace(e, cmd[1], tmp2);
 		else if (arg == 2 && find_tab(cmd[1], name))
