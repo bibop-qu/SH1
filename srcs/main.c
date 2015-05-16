@@ -14,14 +14,17 @@
 #include "get_next_line.h"
 #include "env.h"
 #include "tools.h"
+#include "exec.h"
 
 int		main(int ac, char **av, char **env)
 {
 	char	**e;
 	char	*line;
 	char	**cmd;
+	char	**path;
 
 	line = NULL;
+	path = NULL;
 	if (ac == 1 && av)
 		e = init_env(env);
 	while (42)
@@ -37,7 +40,13 @@ int		main(int ac, char **av, char **env)
 			e = ft_setenv(e, cmd);
 		else if(!ft_strcmp(cmd[0], "unsetenv"))
 			e = ft_unsetenv(e, cmd);
+		else
+		{
+			path = recup_path(e);
+			do_fork(cmd, e, path);
+		}
 		free(line);
+		free(path);
 		free_tab(cmd);
 	}
 	return (0);
