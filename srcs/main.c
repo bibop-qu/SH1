@@ -32,6 +32,8 @@ int		main(int ac, char **av, char **env)
 		ft_putstr("$> ");
 		get_next_line(0, &line);
 		cmd = ft_strsplit(line, ' ');
+		if (!cmd || cmd[0] == '\0')
+			continue ;
 		if (!ft_strcmp(cmd[0], "exit"))
 			exit(0);
 		else if(!ft_strcmp(cmd[0], "env"))
@@ -40,13 +42,12 @@ int		main(int ac, char **av, char **env)
 			e = ft_setenv(e, cmd);
 		else if(!ft_strcmp(cmd[0], "unsetenv"))
 			e = ft_unsetenv(e, cmd);
-		else
+		else 
 		{
 			path = recup_path(e);
 			do_fork(cmd, e, path);
 		}
 		free(line);
-		free(path);
 		free_tab(cmd);
 	}
 	return (0);

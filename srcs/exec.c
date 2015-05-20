@@ -7,6 +7,7 @@ char	**recup_path(char **e)
 	char	*line;
 	char	**path;
 
+	line = NULL;
 	while (*e)
 	{
 		if (!ft_strncmp(*e, "PATH=", 5))
@@ -14,6 +15,7 @@ char	**recup_path(char **e)
 		e++;
 	}
 	path = ft_strsplit(line, ':');
+	free (line);
 	return (path);
 }
 
@@ -25,17 +27,25 @@ void	do_fork(char **cmd, char **e, char **path)
 	char	*bin;
 
 	i = 0;
+	tmp = NULL;
+	bin = NULL;
 	pid = fork();
 	if (pid == 0)
 	{
+		if (path == NULL || path[0] == NULL)
+		{
+			write(2, cmd[0], ft_strlen(cmd[0]));
+			write(2, ": command not found\n", 20);
+			exit(1);
+		}
 		while (path[i])
 		{
 			tmp = ft_strjoin(path[i], "/");
 			bin = ft_strjoin(tmp, cmd[0]);
 			free(tmp);
-			if (execve(bin, cmd, e) == -1)
+			if (execve(bin, cmd, e) == -1 && path[i])
 				i++;
-			else if (path[i] == NULL)
+			if (path[i] == NULL)
 			{
 				write(2, cmd[0], ft_strlen(cmd[0]));
 				write(2, ": command not found\n", 20);
