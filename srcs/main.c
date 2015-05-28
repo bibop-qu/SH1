@@ -15,6 +15,7 @@
 #include "env.h"
 #include "tools.h"
 #include "exec.h"
+#include "build_cd.h"
 
 int		main(int ac, char **av, char **env)
 {
@@ -36,12 +37,14 @@ int		main(int ac, char **av, char **env)
 			continue ;
 		if (!ft_strcmp(cmd[0], "exit"))
 			exit(0);
-		else if(!ft_strcmp(cmd[0], "env"))
+		else if (!ft_strcmp(cmd[0], "env"))
 			ft_aff_env(e);
-		else if(!ft_strcmp(cmd[0], "setenv"))
+		else if (!ft_strcmp(cmd[0], "setenv"))
 			e = ft_setenv(e, cmd);
-		else if(!ft_strcmp(cmd[0], "unsetenv"))
+		else if (!ft_strcmp(cmd[0], "unsetenv"))
 			e = ft_unsetenv(e, cmd);
+		else if (!ft_strcmp(cmd[0], "cd"))
+			ft_cd(e, cmd);
 		else 
 		{
 			path = recup_path(e);

@@ -1,6 +1,6 @@
 
-SRCS =	srcs/main.c srcs/env.c srcs/tools_env.c srcs/tools.c srcs/exec.c
-OBJS =	main.o env.o tools_env.o tools.o exec.o
+SRCS =	srcs/main.c srcs/env.c srcs/tools_env.c srcs/tools.c srcs/exec.c srcs/build_cd.c
+OBJS =	main.o env.o tools_env.o tools.o exec.o build_cd.o
 NAME = ft_minishell1 
 CFLAG = -Wall -Wextra -Werror
 
