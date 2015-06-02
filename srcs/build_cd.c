@@ -18,22 +18,32 @@
 char	**ft_cd(char **e, char **cmd)
 {
 	char	**tmp;
+	char	*temp;
 
+	temp = NULL;
 	tmp = (char**)malloc(sizeof(char*) * 4);
-	tmp[0] = ft_strdup("toto");
+	tmp[0] = ft_strdup("WHALLA");
 	tmp[1] = ft_strdup("OLDPWD");
-	tmp[2] = getcwd(tmp[0], 256);
+	tmp[2] = getcwd(tmp[2], 256);
 	tmp[3] = NULL;
 	e = ft_setenv(e, tmp);
-	free(tmp[1]);
-	free(tmp[2]);
-	tmp[1] = ft_strdup("PWD");
-	tmp[2] = ft_strdup(cmd[1]);
-	if (chdir(cmd[1]) == -1)
+	temp = ft_strjoin(tmp[2], "/");
+	if (ft_strchr(cmd[1], '/') && chdir(cmd[1]) == -1)
 	{
 		write(2, "cd: no such file or directory: ", 31);
 		write(2, cmd[1], ft_strlen(cmd[1]));
 		write(2, "\n", 1);
 	}
+	else if (!ft_strchr(cmd[1], '/') && chdir(ft_strjoin(temp, cmd[1])) == -1)
+	{
+		write(2, "cd: no such file or directory: ", 31);
+		write(2, ft_strjoin(temp, cmd[1]), ft_strlen(cmd[1]) + ft_strlen(temp));
+		write(2, "\n", 1);
+	}
+	tmp[1] = ft_strdup("PWD");
+	tmp[2] = getcwd(tmp[2], 256);
+	e = ft_setenv(e, tmp);
+	free(temp);
+	free_tab(tmp);
 	return (e);
 }
