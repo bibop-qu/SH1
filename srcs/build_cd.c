@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   build_cd.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/14 17:04:56 by basle-qu          #+#    #+#             */
+/*   Updated: 2015/10/14 21:42:30 by basle-qu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_minishell1.h"
 #include "libft.h"
@@ -5,55 +16,108 @@
 #include "tools_env.h"
 #include "env.h"
 
-t_env	*ft_cd(t_env *e, char **cmd)
+void	ft_replace(char *name, char *val, t_env *e)
 {
-	char	**tab;
-	char	*path;
-	t_env	*tmp;
 	int		i;
-	int		j;
+	t_env	*tmp;
 
-	i = 0;
-	j = 0;
+	i = find_list(name, e);
 	tmp = e;
-	path = NULL;
-	if ((tab = (char**)malloc(sizeof(char*) * 4)) == 0)
-		return (NULL);
-	tab[0] = ft_strdup("cd");
-	tab[1] = ft_strdup("OLDPWD");
-	i = find_list("PWD", e);
-	while (++j < i)
+	while (i > 1)
+	{
 		tmp = tmp->next;
-	tab[2] = (char*)malloc(sizeof(char) * ft_strlen(tmp->value));
-	tab[2] = getcwd(tab[2], 200);
-	tab[3] = NULL;
-	path = ft_strjoin(tab[2], "/");
-	if(cmd[1] && ft_strchr(cmd[1], '/') && chdir(cmd[1]) != 0)
-	{
-		ft_putendl("la tete a toto tu la dans le dos");
-		ft_putendl("la tete a tutu tu la dans le ...");
+		i--;
 	}
-	if(cmd[1] && !ft_strchr(cmd[1], '/') && chdir(ft_strjoin(path, cmd[1])) != 0)
+	free(tmp->value);
+	tmp->value = ft_strdup(val);
+}
+
+void	ft_back(t_env *e, char *in, char *old)
+{
+	ft_replace("PWD", old, e);
+	ft_replace("OLDPWD", in, e);
+	if (chdir(old) == -1)
 	{
-		ft_putendl("la tete a toto tu la dans le dos");
-		ft_putendl("la tete a tutu tu la dans le ...");
+		ft_putstr("cd: no such file or directory: ");
+		ft_putendl(old);
 	}
-	ft_setenv(e, tab);
-	tab[1] = ft_strdup("PWD");
-	if (!cmd[1])
+}
+
+void	ft_home(t_env *e, char *in)
+{
+	int		i;
+	char	*home;
+	t_env	*tmp;
+
+	i = find_list("HOME", e);
+	tmp = e;
+	while (i > 1)
 	{
-		tmp = e;
-		j = 0;
-		i = find_list("HOME", e);
-		while (++j < i)
-			tmp = tmp->next;
-		tab[2] = ft_strdup(tmp->value);
-		chdir(tmp->value);
+		tmp = tmp->next;
+		i--;
+	}
+	home = ft_strdup(tmp->value);
+	if (chdir(home) == -1)
+	{
+		ft_putstr("cd: no such file or directory: ");
+		ft_putendl(home);
+	}
+	ft_replace("PWD", home, e);
+	ft_replace("OLDPWD", in, e);
+}
+
+void	ft_move(t_env *e, char *in, char *go)
+{
+	char	*tmp;
+	char	*path;
+
+	if (ft_strchr(go, '/'))
+	{
+		ft_replace("PWD", go, e);
+		ft_replace("OLDPWD", in, e);
+		if (chdir(go) == -1)
+		{
+			ft_putstr("cd: no such file or directory: ");
+			ft_putendl(go);
+		}
 	}
 	else
-		tab[2] = getcwd(tab[2], 200);
-	ft_setenv(e, tab);
-	free_tab(tab);
-	free(path);
+	{
+		tmp = ft_strjoin(in, "/");
+		path = ft_strjoin(tmp, go);
+		ft_replace("PWD", path, e);
+		ft_replace("OLDPWD", in, e);
+		if (chdir(path) == -1)
+		{
+			ft_putstr("cd: no such file or directory: ");
+			ft_putendl(go);
+		}
+	}
+}
+
+t_env	*ft_cd(t_env *e, char **cmd)
+{
+	int		i;
+	char	*in;
+	char	*go;
+	char	*old;
+	t_env	*tmp;
+
+	in = NULL;
+	in = getcwd(in, 200);
+	i = find_list("OLDPWD", e);
+	tmp = e;
+	while (--i > 0)
+		tmp = tmp->next;
+	old = ft_strdup(tmp->value);
+	if (!cmd[1])
+		ft_home(e, in);
+	else if (!ft_strcmp("-", cmd[1]))
+		ft_back(e, in, old);
+	else if (cmd[1])
+	{
+		go = ft_strdup(cmd[1]);
+		ft_move(e, in, go);
+	}
 	return (e);
 }

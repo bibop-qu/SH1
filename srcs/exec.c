@@ -1,46 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/14 17:05:08 by basle-qu          #+#    #+#             */
+/*   Updated: 2015/10/14 22:17:51 by basle-qu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
 #include "tools.h"
 #include "ft_minishell1.h"
-
-int		size_list(t_env *list)
-{
-	int		size;
-	t_env	*tmp;
-
-	size = 0;
-	tmp = list;
-	while (tmp)
-	{
-		size++;
-		tmp = tmp->next;
-	}
-	free(tmp);
-	return (size);
-}
-
-char	**listtotab(t_env *list)
-{
-	int		i;
-	char	**env;
-	char	*temp;
-	t_env	*tmp;
-
-	i = 0;
-	tmp = list;
-	env = (char**)malloc(sizeof(char*) * (size_list(list) + 1));
-	while (tmp)
-	{
-		temp = ft_strjoin(tmp->name, "=");
-		env[i] = ft_strjoin(temp, tmp->value);
-		i++;
-		free(temp);
-		tmp = tmp->next;
-	}
-	env[i] = NULL;
-	free(tmp);
-	return (env);
-}
 
 char	*ft_point(t_env *e)
 {
@@ -75,55 +47,64 @@ char	**recup_path(t_env *e)
 		tmp = tmp->next;
 	}
 	path = ft_strsplit(line, ':');
-	free (line);
+	free(line);
 	return (path);
+}
+
+int		ft_test(char **cmd, t_env *e, char **env, char **path, int i)
+{
+	char	*tmp;
+	char	*bin;
+
+	bin = NULL;
+	if (!ft_strchr(cmd[0], '.'))
+	{
+		tmp = ft_strjoin(path[i], "/");
+		bin = ft_strjoin(tmp, cmd[0]);
+	}
+	else
+	{
+		tmp = ft_point(e);
+		bin = ft_strjoin(tmp, cmd[0] + 2);
+	}
+	free(tmp);
+	if (execve(bin, cmd, env) == -1 && path[i])
+		i++;
+	if (path[i] == NULL)
+	{
+		write(2, cmd[0], ft_strlen(cmd[0]));
+		write(2, ": command not found\n", 20);
+		free(bin);
+		exit(1);
+	}
+	return (i);
+}
+
+void	ft_pid(char **cmd, char **env, char **path, t_env *e)
+{
+	int		i;
+
+	i = 0;
+	execve(cmd[0], cmd, env);
+	if (path == NULL || path[0] == NULL)
+	{
+		write(2, cmd[0], ft_strlen(cmd[0]));
+		write(2, ": command not found\n", 20);
+		exit(1);
+	}
+	while (path[i])
+		i = ft_test(cmd, e, env, path, i);
 }
 
 void	do_fork(char **cmd, t_env *e, char **env)
 {
-	int		i;
-	pid_t	pid;
-	char	*tmp;
-	char	*bin;
 	char	**path;
+	pid_t	pid;
 
 	path = recup_path(e);
-	i = 0;
-	tmp = NULL;
-	bin = NULL;
 	pid = fork();
 	if (pid == 0)
-	{
-		if (path == NULL || path[0] == NULL)
-		{
-			write(2, cmd[0], ft_strlen(cmd[0]));
-			write(2, ": command not found\n", 20);
-			exit(1);
-		}
-		while (path[i])
-		{
-			if (!ft_strchr(cmd[0], '.'))
-			{
-				tmp = ft_strjoin(path[i], "/");
-				bin = ft_strjoin(tmp, cmd[0]);
-			}
-			else
-			{
-				tmp = ft_point(e);
-				bin = ft_strjoin(tmp, cmd[0] + 2);
-			}
-			free(tmp);
-			if (execve(bin, cmd, env) == -1 && path[i])
-				i++;
-			if (path[i] == NULL)
-			{
-				write(2, cmd[0], ft_strlen(cmd[0]));
-				write(2, ": command not found\n", 20);
-				free(bin);
-				exit(1);
-			}
-		}
-	}
+		ft_pid(cmd, env, path, e);
 	else
 	{
 		free_tab(path);

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/10/14 17:05:14 by basle-qu          #+#    #+#             */
+/*   Updated: 2015/10/14 21:37:23 by basle-qu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_minishell1.h"
 #include "libft.h"
@@ -25,6 +36,29 @@ t_env	*init_env(t_env *e, char **env)
 	return (e);
 }
 
+void	ft_boucle(char **cmd, t_env *e, char **tab_e)
+{
+	if (!ft_strcmp(cmd[0], "exit"))
+	{
+		free_list(e);
+		exit(0);
+	}
+	else if (!ft_strcmp(cmd[0], "env"))
+		ft_env(e);
+	else if (!ft_strcmp(cmd[0], "setenv"))
+		e = ft_setenv(e, cmd);
+	else if (!ft_strcmp(cmd[0], "unsetenv"))
+		e = ft_unsetenv(e, cmd);
+	else if (!ft_strcmp(cmd[0], "cd"))
+		e = ft_cd(e, cmd);
+	else
+	{
+		tab_e = listtotab(e);
+		do_fork(cmd, e, tab_e);
+	}
+	free_tab(cmd);
+}
+
 int		main(int ac, char **av, char **env)
 {
 	t_env	*e;
@@ -45,25 +79,7 @@ int		main(int ac, char **av, char **env)
 		free(line);
 		if (!cmd || cmd[0] == '\0')
 			continue ;
-		if (!ft_strcmp(cmd[0], "exit"))
-		{
-			free_list(e);
-			exit(0);
-		}
-		else if (!ft_strcmp(cmd[0], "env"))
-			ft_env(e);
-		else if (!ft_strcmp(cmd[0], "setenv"))
-			e = ft_setenv(e, cmd);
-		else if (!ft_strcmp(cmd[0], "unsetenv"))
-			e = ft_unsetenv(e, cmd);
-		else if (!ft_strcmp(cmd[0], "cd"))
-			e = ft_cd(e, cmd);
-		else
-		{
-			tab_e = listtotab(e);
-			do_fork(cmd, e, tab_e);
-		}
-		free_tab(cmd);
+		ft_boucle(cmd, e, tab_e);
 	}
 	return (0);
 }
