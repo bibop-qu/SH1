@@ -6,12 +6,13 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 17:05:08 by basle-qu          #+#    #+#             */
-/*   Updated: 2015/10/14 22:17:51 by basle-qu         ###   ########.fr       */
+/*   Updated: 2015/10/17 18:55:07 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "tools.h"
+#include "tools2.h"
 #include "ft_minishell1.h"
 
 char	*ft_point(t_env *e)
@@ -51,15 +52,16 @@ char	**recup_path(t_env *e)
 	return (path);
 }
 
-int		ft_test(char **cmd, t_env *e, char **env, char **path, int i)
+char	*ft_bin(char *path, t_env *e, char **cmd)
 {
 	char	*tmp;
 	char	*bin;
 
+	tmp = NULL;
 	bin = NULL;
 	if (!ft_strchr(cmd[0], '.'))
 	{
-		tmp = ft_strjoin(path[i], "/");
+		tmp = ft_strjoin(path, "/");
 		bin = ft_strjoin(tmp, cmd[0]);
 	}
 	else
@@ -68,23 +70,16 @@ int		ft_test(char **cmd, t_env *e, char **env, char **path, int i)
 		bin = ft_strjoin(tmp, cmd[0] + 2);
 	}
 	free(tmp);
-	if (execve(bin, cmd, env) == -1 && path[i])
-		i++;
-	if (path[i] == NULL)
-	{
-		write(2, cmd[0], ft_strlen(cmd[0]));
-		write(2, ": command not found\n", 20);
-		free(bin);
-		exit(1);
-	}
-	return (i);
+	return (bin);
 }
 
 void	ft_pid(char **cmd, char **env, char **path, t_env *e)
 {
 	int		i;
+	char	*bin;
 
 	i = 0;
+	bin = NULL;
 	execve(cmd[0], cmd, env);
 	if (path == NULL || path[0] == NULL)
 	{
@@ -93,7 +88,18 @@ void	ft_pid(char **cmd, char **env, char **path, t_env *e)
 		exit(1);
 	}
 	while (path[i])
-		i = ft_test(cmd, e, env, path, i);
+	{
+		bin = ft_bin(path[i], e, cmd);
+		if (execve(bin, cmd, env) == -1 && path[i])
+			i++;
+		if (path[i] == NULL)
+		{
+			write(2, cmd[0], ft_strlen(cmd[0]));
+			write(2, ": command not found\n", 20);
+			free(bin);
+			exit(1);
+		}
+	}
 }
 
 void	do_fork(char **cmd, t_env *e, char **env)

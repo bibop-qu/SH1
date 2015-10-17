@@ -6,7 +6,7 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 17:05:14 by basle-qu          #+#    #+#             */
-/*   Updated: 2015/10/14 21:37:23 by basle-qu         ###   ########.fr       */
+/*   Updated: 2015/10/17 18:59:39 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int		main(int ac, char **av, char **env)
 	{
 		ft_putstr("$> ");
 		get_next_line(0, &line);
+		line = ft_tild(line, e);
 		cmd = ft_strsplit(line, ' ');
 		free(line);
 		if (!cmd || cmd[0] == '\0')
