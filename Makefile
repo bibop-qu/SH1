@@ -1,6 +1,6 @@
 
-SRCS =	srcs/main.c srcs/env.c srcs/tools_env.c srcs/tools.c srcs/exec.c srcs/build_cd.c srcs/tools2.c
-OBJS =	main.o env.o tools_env.o tools.o exec.o build_cd.o
+SRCS =	srcs/main.c srcs/env.c srcs/tools_env.c srcs/tools.c srcs/exec.c srcs/build_cd.c srcs/tools_bis.c
+OBJS =	main.o env.o tools_env.o tools.o exec.o build_cd.o tools_bis.o
 NAME = ft_minishell1 
 CFLAG = -Wall -Wextra -Werror
 
@@ -15,6 +15,7 @@ $(NAME):
 	@gcc -I includes -c $(CFLAG) $(SRCS)
 	@gcc -I includes -L libft/ -lft $(OBJS) -o $(NAME)
 	@echo "\033[1;36m########## MINISHELL OK ##########\033[00m"
+	@make clean
 
 test: fclean
 	@gcc -I includes -c $(CFLAG) -g $(SRCS)

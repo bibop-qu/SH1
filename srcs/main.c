@@ -6,7 +6,7 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 17:05:14 by basle-qu          #+#    #+#             */
-/*   Updated: 2015/10/17 18:59:39 by basle-qu         ###   ########.fr       */
+/*   Updated: 2015/10/26 14:13:13 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "get_next_line.h"
 #include "tools.h"
 #include "tools_env.h"
+#include "tools_bis.h"
 #include "exec.h"
 #include "build_cd.h"
 
@@ -36,7 +37,7 @@ t_env	*init_env(t_env *e, char **env)
 	return (e);
 }
 
-void	ft_boucle(char **cmd, t_env *e, char **tab_e)
+void	ft_loop(char **cmd, t_env *e, char **tab_e)
 {
 	if (!ft_strcmp(cmd[0], "exit"))
 	{
@@ -75,12 +76,13 @@ int		main(int ac, char **av, char **env)
 	{
 		ft_putstr("$> ");
 		get_next_line(0, &line);
-		line = ft_tild(line, e);
+		if (ft_strchr(line, '~'))
+			line = ft_tild(line, e);
 		cmd = ft_strsplit(line, ' ');
 		free(line);
 		if (!cmd || cmd[0] == '\0')
 			continue ;
-		ft_boucle(cmd, e, tab_e);
+		ft_loop(cmd, e, tab_e);
 	}
 	return (0);
 }

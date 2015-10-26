@@ -6,7 +6,7 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/06 15:32:09 by basle-qu          #+#    #+#             */
-/*   Updated: 2015/01/02 16:28:23 by basle-qu         ###   ########.fr       */
+/*   Updated: 2015/10/20 14:42:46 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
-
-#include "libftprintf.h"
 
 void	*ft_memset(void *d, int nb, size_t len);
 void	ft_bzero(void *s, size_t n);

@@ -6,13 +6,12 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 17:05:08 by basle-qu          #+#    #+#             */
-/*   Updated: 2015/10/17 18:55:07 by basle-qu         ###   ########.fr       */
+/*   Updated: 2015/10/20 14:40:05 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "tools.h"
-#include "tools2.h"
 #include "ft_minishell1.h"
 
 char	*ft_point(t_env *e)

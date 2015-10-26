@@ -6,14 +6,14 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 22:13:39 by basle-qu          #+#    #+#             */
-/*   Updated: 2015/10/14 22:14:04 by basle-qu         ###   ########.fr       */
+/*   Updated: 2015/10/20 14:48:07 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOOLS_H
 # define TOOLS_H
 
-#include "ft_minishell1.h"
+# include "ft_minishell1.h"
 
 int		size_list(t_env *list);
 char	**listtotab(t_env *list);

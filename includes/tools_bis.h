@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tools2.h                                           :+:      :+:    :+:   */
+/*   tools_bis.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/17 17:12:17 by basle-qu          #+#    #+#             */
-/*   Updated: 2015/10/17 18:54:25 by basle-qu         ###   ########.fr       */
+/*   Created: 2015/10/26 13:46:00 by basle-qu          #+#    #+#             */
+/*   Updated: 2015/10/26 13:46:33 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOOLS2_H
-#define TOOLS2_H
+#ifndef TOOLS_BIS_H
+# define TOOLS_BIS_H
 
-char	*ft_point(t_env *e);
+char	*ft_tild(char *line, t_env *e);
 
 #endif
