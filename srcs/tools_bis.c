@@ -14,37 +14,38 @@
 #include "libft.h"
 #include "tools_env.h"
 
-char	*ft_rep(char *line, char *home)
+char	**ft_split_one(char *line, char c)
 {
 	int		i;
 	int		j;
-	int		k;
-	char	*result;
-	
+	char	**tab;
+
 	i = 0;
 	j = 0;
-	k = 0;
-	while (line[i] && line[i] != '~')
+	tab = (char**)malloc(sizeof(char*) * 3);
+	while (line[i] && line[i] != c)
 		i++;
-	result = (char*)malloc(sizeof(char) * i + ft_strlen(home));
-	while (j < i)
+	tab[0] = (char*)malloc(sizeof(char) * i);
+	ft_strncpy(tab[0], line, i);
+	tab[1] = (char*)malloc(sizeof(char) * (ft_strlen(line) - i));
+	while (line[++i])
 	{
-		result[j] = line[j];
+		tab[1][j] = line[i];
 		j++;
 	}
-	while (home[k])
-	{
-		result[j] = home[k];
-		j++;
-		k++;
-	}
-	while (line[i])
-	{
-		result[j] = line[i];
-		j++;
-		i++;
-	}
-	ft_putendl(result);
+	tab[2] = NULL;
+	return (tab);
+}
+
+char	*ft_rep(char *line, char *home)
+{
+	char	**tmp;
+	char	*yolo;
+	char	*result;
+
+	tmp = ft_split_one(line, '~');
+	yolo = ft_strjoin(tmp[0], home);
+	result = ft_strjoin(yolo, tmp[1]);
 	return (result);
 }
 
@@ -69,6 +70,5 @@ char	*ft_tild(char *line, t_env *e)
 	{
 		result = ft_rep(line, home);
 	}
-	ft_putendl(result);
 	return (result);
 }
