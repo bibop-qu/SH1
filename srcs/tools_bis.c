@@ -67,8 +67,6 @@ char	*ft_tild(char *line, t_env *e)
 	i = 0;
 	result = ft_strdup(line);
 	while (ft_strchr(result, '~'))
-	{
-		result = ft_rep(line, home);
-	}
+		result = ft_rep(result, home);
 	return (result);
 }
