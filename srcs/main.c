@@ -6,7 +6,7 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 17:05:14 by basle-qu          #+#    #+#             */
-/*   Updated: 2015/10/26 14:13:13 by basle-qu         ###   ########.fr       */
+/*   Updated: 2016/02/20 17:02:41 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,10 @@ void	ft_loop(char **cmd, t_env *e, char **tab_e)
 		e = ft_setenv(e, cmd);
 	else if (!ft_strcmp(cmd[0], "unsetenv"))
 		e = ft_unsetenv(e, cmd);
-	else if (!ft_strcmp(cmd[0], "cd"))
+	else if (!ft_strcmp(cmd[0], "cd") && e)
 		e = ft_cd(e, cmd);
+	else if (!ft_strcmp(cmd[0], "cd") && !e)
+		ft_putendl("build_cd can't run");
 	else
 	{
 		tab_e = listtotab(e);

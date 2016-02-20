@@ -6,7 +6,7 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 17:05:08 by basle-qu          #+#    #+#             */
-/*   Updated: 2015/10/20 14:40:05 by basle-qu         ###   ########.fr       */
+/*   Updated: 2016/02/20 17:07:28 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,8 @@ void	do_fork(char **cmd, t_env *e, char **env)
 		ft_pid(cmd, env, path, e);
 	else
 	{
-		free_tab(path);
+		if (path)
+			free_tab(path);
 		free_tab(env);
 		wait(NULL);
 	}
