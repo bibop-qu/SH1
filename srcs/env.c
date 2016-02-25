@@ -6,7 +6,7 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 17:05:03 by basle-qu          #+#    #+#             */
-/*   Updated: 2015/10/14 21:17:59 by basle-qu         ###   ########.fr       */
+/*   Updated: 2016/02/25 21:37:14 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,21 @@
 #include "tools.h"
 #include "tools_env.h"
 #include "ft_minishell1.h"
+#include "tools_bis.h"
 
 void	ft_env(t_env *e)
 {
 	ft_print_env(e);
+}
+
+t_env	*ft_delete_first(t_env *e)
+{
+	t_env	*tmp;
+
+	tmp = e->next;
+//	free (tmp->name);
+//	free(tmp->value)
+	return (tmp);
 }
 
 t_env	*ft_unsetenv(t_env *e, char **cmd)
@@ -33,7 +44,13 @@ t_env	*ft_unsetenv(t_env *e, char **cmd)
 	{
 		while (cmd[i])
 		{
-			if (find_list(cmd[i], e))
+			if (ft_in_env(e, cmd[i]) && find_list(cmd[i], e) == 0)
+			{
+				free(e->name);
+				free(e->value);
+				e = e->next;
+			}
+			else if (ft_in_env(e, cmd[i]))
 				e = var_del(e, cmd[i], find_list(cmd[i], e));
 			i++;
 		}
@@ -78,6 +95,10 @@ t_env	*ft_setenv(t_env *e, char **cmd)
 		write(2, "Wrong number of arguments !!\n", 29);
 	else if (char_in_tab(cmd, '='))
 		write(2, "Syntaxe error !!\n", 17);
+	else if (!e)
+	{
+		ft_add_link(e, cmd[1], cmd[2]);
+	}
 	else
 		ft_make(e, tmp, cmd, a);
 	return (e);

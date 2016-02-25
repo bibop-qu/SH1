@@ -6,13 +6,43 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/26 13:24:03 by basle-qu          #+#    #+#             */
-/*   Updated: 2015/10/26 14:21:15 by basle-qu         ###   ########.fr       */
+/*   Updated: 2016/02/25 20:20:04 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell1.h"
 #include "libft.h"
 #include "tools_env.h"
+
+char	*ft_in_env(t_env *e, char *name)
+{
+	t_env	*tmp;
+
+	tmp = e;
+	while (tmp)
+	{
+		if (!ft_strcmp(name, tmp->name))
+			return (name);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+char	*ft_value(t_env *e, char *name)
+{
+	t_env	*tmp;
+	char	*result;
+
+	result = NULL;
+	tmp = e;
+	while (tmp)
+	{
+		if (!ft_strcmp(name, tmp->name))
+			result = ft_strdup(tmp->value);
+		tmp = tmp->next;
+	}
+	return (result);
+}
 
 char	**ft_split_one(char *line, char c)
 {
@@ -54,19 +84,13 @@ char	*ft_tild(char *line, t_env *e)
 	int		i;
 	char	*home;
 	char	*result;
-	t_env	*tmp;
 
-	i = find_list("HOME", e);
-	tmp = e;
-	while (i > 1)
-	{
-		tmp = tmp->next;
-		i--;
-	}
-	home = ft_strdup(tmp->value);
 	i = 0;
+	home = NULL;
+	if (ft_value(e, "HOME") != NULL)
+		home = ft_strdup(ft_value(e, "HOME"));
 	result = ft_strdup(line);
-	while (ft_strchr(result, '~'))
+	while (ft_strchr(result, '~') && home)
 		result = ft_rep(result, home);
 	return (result);
 }

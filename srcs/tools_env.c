@@ -6,7 +6,7 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 17:05:36 by basle-qu          #+#    #+#             */
-/*   Updated: 2015/10/14 21:22:40 by basle-qu         ###   ########.fr       */
+/*   Updated: 2016/02/25 21:40:46 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ int		find_list(char *str, t_env *e)
 	tmp = e;
 	while (tmp)
 	{
-		i++;
 		if (!ft_strcmp(tmp->name, str))
 			return (i);
+		i++;
 		tmp = tmp->next;
 	}
 	return (0);
@@ -91,26 +91,22 @@ t_env	*var_del(t_env *e, char *name, int n)
 	int		i;
 	t_env	*tmp;
 
-	i = 2;
+	i = 1;
 	tmp = e;
 	while (name && i < n)
 	{
 		tmp = tmp->next;
 		i++;
 	}
-	if (tmp->next && tmp->next->next)
+	if (tmp->next)
 	{
 		free(tmp->next->name);
 		free(tmp->next->value);
 		free(tmp->next);
-		tmp->next = tmp->next->next;
-	}
-	else
-	{
-		free(tmp->next->name);
-		free(tmp->next->value);
-		free(tmp->next);
-		tmp->next = NULL;
+		if (tmp->next->next)
+			tmp->next = tmp->next->next;
+		else
+			tmp->next = NULL;
 	}
 	return (e);
 }

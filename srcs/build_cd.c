@@ -6,7 +6,7 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 17:04:56 by basle-qu          #+#    #+#             */
-/*   Updated: 2016/02/20 17:06:12 by basle-qu         ###   ########.fr       */
+/*   Updated: 2016/02/25 18:39:30 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "tools.h"
 #include "tools_env.h"
 #include "env.h"
+#include "tools_bis.h"
 
 void	ft_replace(char *name, char *val, t_env *e)
 {
@@ -45,18 +46,9 @@ void	ft_back(t_env *e, char *in, char *old)
 
 void	ft_home(t_env *e, char *in)
 {
-	int		i;
 	char	*home;
-	t_env	*tmp;
 
-	i = find_list("HOME", e);
-	tmp = e;
-	while (i > 1)
-	{
-		tmp = tmp->next;
-		i--;
-	}
-	home = ft_strdup(tmp->value);
+	home = ft_strdup(ft_value(e, "HOME"));
 	if (chdir(home) == -1)
 	{
 		ft_putstr("cd: no such file or directory: ");
@@ -64,6 +56,7 @@ void	ft_home(t_env *e, char *in)
 	}
 	ft_replace("PWD", home, e);
 	ft_replace("OLDPWD", in, e);
+	free(home);
 }
 
 void	ft_move(t_env *e, char *in, char *go)
@@ -92,24 +85,20 @@ void	ft_move(t_env *e, char *in, char *go)
 			ft_putstr("cd: no such file or directory: ");
 			ft_putendl(go);
 		}
+		free(tmp);
+		free(path);
 	}
 }
 
 t_env	*ft_cd(t_env *e, char **cmd)
 {
-	int		i;
 	char	*in;
 	char	*go;
 	char	*old;
-	t_env	*tmp;
 
 	in = NULL;
 	in = getcwd(in, 200);
-	i = find_list("OLDPWD", e);
-	tmp = e;
-	while (--i > 0)
-		tmp = tmp->next;
-	old = ft_strdup(tmp->value);
+	old = ft_strdup(ft_value(e, "OLDPWD"));
 	if (!cmd[1])
 		ft_home(e, in);
 	else if (!ft_strcmp("-", cmd[1]))

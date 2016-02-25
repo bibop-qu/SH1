@@ -6,22 +6,21 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 17:05:08 by basle-qu          #+#    #+#             */
-/*   Updated: 2016/02/20 17:07:28 by basle-qu         ###   ########.fr       */
+/*   Updated: 2016/02/25 18:18:54 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "tools.h"
 #include "ft_minishell1.h"
+#include "tools_bis.h"
 
 char	*ft_point(t_env *e)
 {
-	int		i;
 	t_env	*tmp;
 	char	*result;
 	char	*path;
 
-	i = 0;
 	tmp = e;
 	result = NULL;
 	while (tmp && ft_strcmp(tmp->name, "PWD"))
@@ -34,18 +33,10 @@ char	*ft_point(t_env *e)
 
 char	**recup_path(t_env *e)
 {
-	t_env	*tmp;
 	char	*line;
 	char	**path;
 
-	line = NULL;
-	tmp = e;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->name, "PATH"))
-			line = ft_strdup(tmp->value);
-		tmp = tmp->next;
-	}
+	line = ft_value(e, "PATH");
 	path = ft_strsplit(line, ':');
 	free(line);
 	return (path);
