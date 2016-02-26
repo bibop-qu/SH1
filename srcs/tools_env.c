@@ -6,7 +6,7 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 17:05:36 by basle-qu          #+#    #+#             */
-/*   Updated: 2016/02/25 21:40:46 by basle-qu         ###   ########.fr       */
+/*   Updated: 2016/02/26 17:25:09 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	ft_print_env(t_env *env)
 		ft_putchar('\n');
 		tmp = tmp->next;
 	}
-	free(tmp);
 }
 
 int		char_in_tab(char **tab, char c)

@@ -6,7 +6,7 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 17:05:14 by basle-qu          #+#    #+#             */
-/*   Updated: 2016/02/25 21:43:17 by basle-qu         ###   ########.fr       */
+/*   Updated: 2016/02/26 16:29:37 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,25 @@ t_env	*init_env(t_env *e, char **env)
 	return (e);
 }
 
-void	ft_loop(char **cmd, t_env *e, char **tab_e)
+void	ft_loop(char **cmd, t_env **e, char **tab_e)
 {
 	if (!ft_strcmp(cmd[0], "exit"))
 	{
-		free_list(e);
+		free_list(*e);
 		exit(0);
 	}
 	else if (!ft_strcmp(cmd[0], "env"))
-		ft_env(e);
+		ft_env(*e);
 	else if (!ft_strcmp(cmd[0], "setenv"))
-		e = ft_setenv(e, cmd);
+		ft_setenv(e, cmd);
 	else if (!ft_strcmp(cmd[0], "unsetenv"))
-		e = ft_unsetenv(e, cmd);
-	else if (!ft_strcmp(cmd[0], "cd") && e)
-		e = ft_cd(e, cmd);
+		ft_unsetenv(e, cmd);
+	else if (!ft_strcmp(cmd[0], "cd") && *e)
+		ft_cd(*e, cmd);
 	else
 	{
-		tab_e = listtotab(e);
-		do_fork(cmd, e, tab_e);
+		tab_e = listtotab(*e);
+		do_fork(cmd, *e, tab_e);
 	}
 	free_tab(cmd);
 }
@@ -70,7 +70,7 @@ int		main(int ac, char **av, char **env)
 	e = NULL;
 	line = NULL;
 	tab_e = NULL;
-	if (ac >= 1 && av)
+	if (ac >= 1 && av && *env)
 		e = init_env(e, env);
 	while (42)
 	{
@@ -82,7 +82,7 @@ int		main(int ac, char **av, char **env)
 		free(line);
 		if (!cmd || cmd[0] == '\0')
 			continue ;
-		ft_loop(cmd, e, tab_e);
+		ft_loop(cmd, &e, tab_e);
 	}
 	return (0);
 }

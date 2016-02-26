@@ -6,7 +6,7 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 17:04:56 by basle-qu          #+#    #+#             */
-/*   Updated: 2016/02/25 18:39:30 by basle-qu         ###   ########.fr       */
+/*   Updated: 2016/02/26 17:24:45 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ void	ft_move(t_env *e, char *in, char *go)
 			ft_putstr("cd: no such file or directory: ");
 			ft_putendl(go);
 		}
-		free(tmp);
-		free(path);
 	}
 }
 
