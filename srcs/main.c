@@ -45,7 +45,10 @@ void	ft_loop(char **cmd, t_env **e, char **tab_e)
 		exit(0);
 	}
 	else if (!ft_strcmp(cmd[0], "env"))
-		ft_env(*e);
+	{
+		tab_e = listtotab(*e);
+		ft_env(*e, cmd, tab_e);
+	}
 	else if (!ft_strcmp(cmd[0], "setenv"))
 		ft_setenv(e, cmd);
 	else if (!ft_strcmp(cmd[0], "unsetenv"))

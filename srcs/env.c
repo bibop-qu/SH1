@@ -15,10 +15,16 @@
 #include "tools_env.h"
 #include "ft_minishell1.h"
 #include "tools_bis.h"
+#include "exec.h"
 
-void	ft_env(t_env *e)
+void	ft_env(t_env *e, char **cmd, char **env)
 {
-	ft_print_env(e);
+	if (cmd[0] && cmd[1] == NULL)
+		ft_print_env(e);
+	else if (cmd[0] && ft_strcmp(cmd[1], "-i"))
+		do_fork(cmd + 1, e, env);
+	else if (cmd[0] && !ft_strcmp(cmd[1], "-i"))
+		execve(NULL, cmd + 2, NULL);
 }
 
 t_env	*ft_unsetenv(t_env **e, char **cmd)
