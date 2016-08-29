@@ -6,7 +6,7 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 17:05:14 by basle-qu          #+#    #+#             */
-/*   Updated: 2016/02/26 16:29:37 by basle-qu         ###   ########.fr       */
+/*   Updated: 2016/08/16 11:07:15 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,25 @@
 #include "tools_bis.h"
 #include "exec.h"
 #include "build_cd.h"
+
+char	*clear_line(char *line)
+{
+	char	*cpy;
+	int		i;
+
+	i = 0;
+	cpy = (char*)malloc(sizeof(char) * ft_strlen(line));
+	while (line[i])
+	{
+		if (line[i] == '\t')
+			cpy[i] = ' ';
+		else
+			cpy[i] = line[i];
+		i++;
+	}
+	cpy[i] = '\0';
+	return (cpy);
+}
 
 t_env	*init_env(t_env *e, char **env)
 {
@@ -79,6 +98,7 @@ int		main(int ac, char **av, char **env)
 	{
 		ft_putstr("$> ");
 		get_next_line(0, &line);
+		line = clear_line(line);
 		if (ft_strchr(line, '~') && e && ft_in_env(e, "HOME"))
 			line = ft_tild(line, e);
 		cmd = ft_strsplit(line, ' ');

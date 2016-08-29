@@ -1,10 +1,10 @@
 
 SRCS =	srcs/main.c srcs/env.c srcs/tools_env.c srcs/tools.c srcs/exec.c srcs/build_cd.c srcs/tools_bis.c
 OBJS =	main.o env.o tools_env.o tools.o exec.o build_cd.o tools_bis.o
-NAME = ft_minishell1 
+NAME = minishell 
 CFLAG = -Wall -Wextra -Werror
 
-.PHONY: all $(NAME) test clean fclean re
+.PHONY: all test clean fclean re
 
 all: $(NAME)
 

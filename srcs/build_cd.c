@@ -6,7 +6,7 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 17:04:56 by basle-qu          #+#    #+#             */
-/*   Updated: 2016/02/26 17:24:45 by basle-qu         ###   ########.fr       */
+/*   Updated: 2016/08/16 11:30:50 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_replace(char *name, char *val, t_env *e)
 	int		i;
 	t_env	*tmp;
 
-	i = find_list(name, e);
+	i = find_list(name, e) + 1;
 	tmp = e;
 	while (i > 1)
 	{
@@ -44,7 +44,7 @@ void	ft_back(t_env *e, char *in, char *old)
 	}
 }
 
-void	ft_home(t_env *e, char *in)
+t_env	*ft_home(t_env *e, char *in)
 {
 	char	*home;
 
@@ -57,6 +57,7 @@ void	ft_home(t_env *e, char *in)
 	ft_replace("PWD", home, e);
 	ft_replace("OLDPWD", in, e);
 	free(home);
+	return (e);
 }
 
 void	ft_move(t_env *e, char *in, char *go)
