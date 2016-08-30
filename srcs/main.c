@@ -6,7 +6,7 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 17:05:14 by basle-qu          #+#    #+#             */
-/*   Updated: 2016/08/16 11:07:15 by basle-qu         ###   ########.fr       */
+/*   Updated: 2016/08/30 19:40:12 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "tools_bis.h"
 #include "exec.h"
 #include "build_cd.h"
+#include "echo.h"
 
 char	*clear_line(char *line)
 {
@@ -37,6 +38,18 @@ char	*clear_line(char *line)
 	}
 	cpy[i] = '\0';
 	return (cpy);
+}
+
+char	*final_line(char *line, t_env *e)
+{
+	char	*result;
+
+	result  = line;
+	if (!ft_strchr(line, '"'))
+		result = clear_line(line);
+	if (ft_strchr(line, '~') && e && ft_in_env(e, "HOME"))
+		result = ft_tild(line, e);
+	return (result);
 }
 
 t_env	*init_env(t_env *e, char **env)
@@ -98,10 +111,8 @@ int		main(int ac, char **av, char **env)
 	{
 		ft_putstr("$> ");
 		get_next_line(0, &line);
-		line = clear_line(line);
-		if (ft_strchr(line, '~') && e && ft_in_env(e, "HOME"))
-			line = ft_tild(line, e);
-		cmd = ft_strsplit(line, ' ');
+		line = final_line(line, e);
+		cmd = final_cmd(line);
 		free(line);
 		if (!cmd || cmd[0] == '\0')
 			continue ;

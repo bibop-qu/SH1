@@ -6,7 +6,7 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 17:04:56 by basle-qu          #+#    #+#             */
-/*   Updated: 2016/08/16 11:30:50 by basle-qu         ###   ########.fr       */
+/*   Updated: 2016/08/30 17:39:09 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,14 @@ void	ft_move(t_env *e, char *in, char *go)
 	{
 		tmp = ft_strjoin(in, "/");
 		path = ft_strjoin(tmp, go);
-		ft_replace("PWD", path, e);
 		ft_replace("OLDPWD", in, e);
 		if (chdir(path) == -1)
 		{
 			ft_putstr("cd: no such file or directory: ");
 			ft_putendl(go);
 		}
+		in = getcwd(in, 200);
+		ft_replace("PWD", in, e);
 	}
 }
 

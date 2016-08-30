@@ -1,6 +1,18 @@
+#******************************************************************************#
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: basle-qu <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2016/08/30 19:38:44 by basle-qu          #+#    #+#              #
+#    Updated: 2016/08/30 19:39:44 by basle-qu         ###   ########.fr        #
+#                                                                              #
+#******************************************************************************#
 
-SRCS =	srcs/main.c srcs/env.c srcs/tools_env.c srcs/tools.c srcs/exec.c srcs/build_cd.c srcs/tools_bis.c
-OBJS =	main.o env.o tools_env.o tools.o exec.o build_cd.o tools_bis.o
+SRCS =	srcs/main.c srcs/env.c srcs/tools_env.c srcs/tools.c srcs/exec.c \
+	srcs/build_cd.c srcs/tools_bis.c srcs/echo.c
+OBJS =	main.o env.o tools_env.o tools.o exec.o build_cd.o tools_bis.o echo.o
 NAME = minishell 
 CFLAG = -Wall -Wextra -Werror
 
