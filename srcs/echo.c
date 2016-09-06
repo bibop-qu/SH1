@@ -34,6 +34,25 @@ char	*del_quote(char *line)
 	return (result);
 }
 
+char	*entre_quote(char **tab, int *i)
+{
+	ft_putendl("ENTRE_QUOTE");
+	char	*result;
+	char	*tmp;
+
+	result = NULL;
+	tmp = ft_strdup(tab[*i]);
+	while (tab[*i] && !ft_strchr(tab[*i], '"'))
+	{
+		tmp = ft_strjoin(tmp, tab[*i]);
+		*i = *i + 1;
+	}
+	if (tab[*i])
+		result = del_quote(tmp);
+	free(tmp);
+	return (result);
+}
+
 char	**db_quote(char **tab)
 {
 	int		i;
@@ -49,11 +68,8 @@ char	**db_quote(char **tab)
 		tmp = NULL;
 		if (!ft_strchr(tab[i], '"'))
 			ret[k] = ft_strdup(tab[i]);
-		else if (tab[i][0] == '"' && tab[i + 1] && tab[i + 1][ft_strlen(tab[i + 1])] == '"')
-		{
-			ret[k] = ft_strjoin(tab[i], tab[i + 1]);
-			i++;
-		}
+		else if (tab[i][0] == '"')
+			ret[k] = entre_quote(tab, &i);
 		else if (ft_strchr(tab[i], '"') && tab[i][0] != '"')
 			ret[k] = del_quote(tab[i]);
 		i++;
