@@ -13,6 +13,5 @@
 #ifndef ECHO_H
 #define ECHO_H
 
-char	**final_cmd(char *line);
 
 #endif

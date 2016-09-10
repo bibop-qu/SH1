@@ -20,6 +20,7 @@
 #include "exec.h"
 #include "build_cd.h"
 #include "echo.h"
+#include "cmd.h"
 
 char	*clear_line(char *line)
 {

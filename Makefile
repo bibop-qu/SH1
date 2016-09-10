@@ -11,8 +11,9 @@
 #******************************************************************************#
 
 SRCS =	srcs/main.c srcs/env.c srcs/tools_env.c srcs/tools.c srcs/exec.c \
-	srcs/build_cd.c srcs/tools_bis.c srcs/echo.c
-OBJS =	main.o env.o tools_env.o tools.o exec.o build_cd.o tools_bis.o echo.o
+	srcs/build_cd.c srcs/tools_bis.c srcs/echo.c srcs/cmd.c
+OBJS =	main.o env.o tools_env.o tools.o exec.o build_cd.o tools_bis.o echo.o \
+		cmd.o
 NAME = minishell 
 CFLAG = -Wall -Wextra -Werror
 
