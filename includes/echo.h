@@ -13,5 +13,6 @@
 #ifndef ECHO_H
 #define ECHO_H
 
+void	ft_echo(char **cmd, t_env *e);
 
 #endif

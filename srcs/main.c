@@ -72,7 +72,9 @@ t_env	*init_env(t_env *e, char **env)
 
 void	ft_loop(char **cmd, t_env **e, char **tab_e)
 {
-	if (!ft_strcmp(cmd[0], "exit"))
+	if (!ft_strcmp(cmd[0], "echo"))
+		ft_echo(cmd, *e);
+	else if (!ft_strcmp(cmd[0], "exit"))
 	{
 		free_list(*e);
 		exit(0);
