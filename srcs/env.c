@@ -25,6 +25,8 @@ void	ft_env(t_env *e, char **cmd, char **env)
 		do_fork(cmd + 1, e, env);
 	else if (cmd[0] && !ft_strcmp(cmd[1], "-i"))
 		execve(NULL, cmd + 2, NULL);
+	if (env[0][0])
+		free_tab(env);
 }
 
 t_env	*ft_unsetenv(t_env **e, char **cmd)

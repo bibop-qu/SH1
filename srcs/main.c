@@ -38,6 +38,7 @@ char	*clear_line(char *line)
 		i++;
 	}
 	cpy[i] = '\0';
+	free(line);
 	return (cpy);
 }
 

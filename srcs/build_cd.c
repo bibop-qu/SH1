@@ -87,6 +87,8 @@ void	ft_move(t_env *e, char *in, char *go)
 		}
 		in = getcwd(in, 200);
 		ft_replace("PWD", in, e);
+		free(tmp);
+		free(path);
 	}
 }
 
@@ -107,6 +109,9 @@ t_env	*ft_cd(t_env *e, char **cmd)
 	{
 		go = ft_strdup(cmd[1]);
 		ft_move(e, in, go);
+		free(go);
 	}
+	free(in);
+	free(old);
 	return (e);
 }
