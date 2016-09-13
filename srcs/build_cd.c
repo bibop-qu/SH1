@@ -97,10 +97,13 @@ t_env	*ft_cd(t_env *e, char **cmd)
 	char	*in;
 	char	*go;
 	char	*old;
+	char	*tmp;
 
 	in = NULL;
 	in = getcwd(in, 200);
-	old = ft_strdup(ft_value(e, "OLDPWD"));
+	tmp = ft_value(e, "OLDPWD");
+	old = ft_strdup(tmp);
+	free(tmp);
 	if (!cmd[1])
 		ft_home(e, in);
 	else if (!ft_strcmp("-", cmd[1]))

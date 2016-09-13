@@ -34,45 +34,54 @@ char	*ft_add_char(char *line, char c)
 		result[i] = line[i];
 	result[i] = c;
 	result[i + 1] = '\0';
+	free(line);
 	return (result);
 }
 
+char	*one_dol(t_env	*e, char *tmp, char *result)
+{
+	char	*tmp2;
+	t_env	*tenv;
+
+	tenv = e;
+	while (tenv)
+	{
+		if (!ft_strcmp(tmp, tenv->name))
+		{
+			tmp2 = ft_strdup(tenv->value);
+			result = ft_strjoin(result, tmp2);
+		}
+		tenv = tenv->next;
+	}
+	free(tmp2);
+	return (result);
+}
 char	*ft_replace_dol(char *line, t_env *e)
 {
 	char	*result;
 	char	*tmp;
-	t_env	*tenv;
 	int		i;
 	int		n;
 
-	i = 0;
+	i = -1;
 	result = ft_strdup("");
-	while (line[i])
+	while (line[++i])
 	{
 		n = 0;
-		tenv = e;
 		if (line[i] && line[i] == '$')
 		{
 			i++;
 			while (ft_isalnum(line[i + n]))
 				n++;
 			tmp = ft_strsub(line, i, n);
-			if (find_list(tmp, tenv))
-				while (tenv)
-				{
-					if (!ft_strcmp(tmp, tenv->name))
-					{
-						tmp = ft_strdup(tenv->value);
-						result = ft_strjoin(result, tmp);
-					}
-					tenv = tenv->next;
-				}
+			if (find_list(tmp, e))
+				result = one_dol(e, tmp, result);
 		}
 		else
 			result = ft_add_char(result, line[i]);
 		i = i + n;
-		i++;
 	}
+	free(tmp);
 	return (result);
 }
 
@@ -88,6 +97,7 @@ void	ft_echo(char **cmd, t_env *e)
 		{
 			tmp = ft_replace_dol(cmd[i], e);
 			ft_putstr(tmp);
+			free(tmp);
 		}
 		else
 			ft_putstr(cmd[i]);
