@@ -6,7 +6,7 @@
 /*   By: basle-qu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/30 16:57:08 by basle-qu          #+#    #+#             */
-/*   Updated: 2016/08/31 18:35:59 by basle-qu         ###   ########.fr       */
+/*   Updated: 2016/09/13 19:23:42 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_add_char(char *line, char c)
 	return (result);
 }
 
-char	*one_dol(t_env	*e, char *tmp, char *result)
+char	*one_dol(t_env *e, char *tmp, char *result)
 {
 	char	*tmp2;
 	t_env	*tenv;
@@ -56,6 +56,7 @@ char	*one_dol(t_env	*e, char *tmp, char *result)
 	free(tmp2);
 	return (result);
 }
+
 char	*ft_replace_dol(char *line, t_env *e)
 {
 	char	*result;
@@ -88,7 +89,7 @@ char	*ft_replace_dol(char *line, t_env *e)
 void	ft_echo(char **cmd, t_env *e)
 {
 	int		i;
-	char	*tmp;;
+	char	*tmp;
 
 	i = 1;
 	while (cmd[i] && e)
