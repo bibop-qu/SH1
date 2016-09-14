@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   build_cd.h                                         :+:      :+:    :+:   */
+/*   tools_ter.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: basle-qu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/20 14:43:39 by basle-qu          #+#    #+#             */
-/*   Updated: 2016/09/14 21:16:15 by basle-qu         ###   ########.fr       */
+/*   Created: 2016/09/14 21:08:40 by basle-qu          #+#    #+#             */
+/*   Updated: 2016/09/14 21:14:30 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILD_CD_H
-# define BUILD_CD_H
+#ifndef TOOLS_TER_H
+# define TOOLS_TER_H
 
-t_env	*ft_cd(t_env *e, char **cmd);
-void	ft_replace(char *name, char *val, t_env *e);
+void	ft_slash_move(t_env	*e, char *in, char *go);
 
 #endif

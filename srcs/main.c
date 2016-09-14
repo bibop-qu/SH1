@@ -6,7 +6,7 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 17:05:14 by basle-qu          #+#    #+#             */
-/*   Updated: 2016/08/30 19:40:12 by basle-qu         ###   ########.fr       */
+/*   Updated: 2016/09/14 21:02:51 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*final_line(char *line, t_env *e)
 {
 	char	*result;
 
-	result  = line;
+	result = line;
 	if (!ft_strchr(line, '"'))
 		result = clear_line(line);
 	if (ft_strchr(line, '~') && e && ft_in_env(e, "HOME"))

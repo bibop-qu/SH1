@@ -6,7 +6,7 @@
 /*   By: basle-qu <basle-qu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/14 17:04:56 by basle-qu          #+#    #+#             */
-/*   Updated: 2016/08/30 17:39:09 by basle-qu         ###   ########.fr       */
+/*   Updated: 2016/09/14 21:23:55 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "tools_env.h"
 #include "env.h"
 #include "tools_bis.h"
+#include "tools_ter.h"
 
 void	ft_replace(char *name, char *val, t_env *e)
 {
@@ -47,8 +48,11 @@ void	ft_back(t_env *e, char *in, char *old)
 t_env	*ft_home(t_env *e, char *in)
 {
 	char	*home;
+	char	*tmp;
 
-	home = ft_strdup(ft_value(e, "HOME"));
+	tmp = ft_value(e, "HOME");
+	home = ft_strdup(tmp);
+	free(tmp);
 	if (chdir(home) == -1)
 	{
 		ft_putstr("cd: no such file or directory: ");
@@ -66,15 +70,7 @@ void	ft_move(t_env *e, char *in, char *go)
 	char	*path;
 
 	if (ft_strchr(go, '/'))
-	{
-		ft_replace("PWD", go, e);
-		ft_replace("OLDPWD", in, e);
-		if (chdir(go) == -1)
-		{
-			ft_putstr("cd: no such file or directory: ");
-			ft_putendl(go);
-		}
-	}
+		ft_slash_move(e, in, go);
 	else
 	{
 		tmp = ft_strjoin(in, "/");
