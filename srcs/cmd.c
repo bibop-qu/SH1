@@ -6,12 +6,13 @@
 /*   By: basle-qu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/13 19:19:13 by basle-qu          #+#    #+#             */
-/*   Updated: 2016/09/13 19:20:27 by basle-qu         ###   ########.fr       */
+/*   Updated: 2016/09/15 17:31:58 by basle-qu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "tools.h"
+#include "tools_ter.h"
 
 char	*del_quote(char *line)
 {
@@ -50,17 +51,6 @@ int		ft_count(const char *s, char c)
 	return (counter);
 }
 
-void	if_quote(const char *s, size_t *i, size_t *len)
-{
-	*i = *i + 1;
-	while (s[*i + *len] && (s[*i + *len] != '"'))
-	{
-		*len = *len + 1;
-		if (!s[*i + *len])
-			ft_putendl("SYNTAX ERROR");
-	}
-}
-
 char	**ft_quotesplit(const char *s, char c)
 {
 	char		**ret;
@@ -77,12 +67,7 @@ char	**ft_quotesplit(const char *s, char c)
 			i++;
 		else
 		{
-			len = 0;
-			if (s[i] == '"')
-				if_quote(s, &i, &len);
-			else
-				while (s[i + len] && (s[i + len] != c))
-					len++;
+			nm_ft_quotesplit(&len, &i, s, c);
 			ret[j++] = ft_strsub(s, i, len);
 			i = i + len;
 		}
